@@ -1,10 +1,8 @@
-const Text = () => {
+const Text = ({children}: { children: string }) => {
     return (
-        <div>
-            {/*
-                TODO create ui for Text and use it in StarWars and OpeningCrawl
-            */}
-        </div>
+        <p className="text-3xl text-justify leading-normal tracking-widest">
+            {children}
+        </p>
     )
 }
 

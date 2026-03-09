@@ -1,10 +1,15 @@
-const Button = () => {
+interface Props{
+    callback?: () => void;
+    className?: string;
+    children: string;
+}
+
+const Button = ({children, callback, className}: Props) => {
     return (
-        <div>
-            {/*
-                TODO create ui for Button and use it in NavItem and Footer
-            */}
-        </div>
+        <div
+            onClick={callback ?? (() => {})}
+            className={`bg-danger border px-3 rounded-md cursor-pointer hover:bg-red-500 hover:text-white ${className ?? ''}`}
+        >{children}</div>
     )
 }
 
