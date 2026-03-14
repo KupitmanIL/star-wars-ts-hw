@@ -27,11 +27,11 @@ const Friend = ({friend, pos}: Props) => {
     if (pos === 7) {
         styles += " rounded-bl-3xl";
     }
-    return  (heroId in characters) ? (
+    return (
     <NavLink to={`/home/${friend}`}>
         <img className={styles} src={characters[friend].img} alt={characters[friend].name}/>
     </NavLink>
-    ) : <ErrorPage/>
+    )
 }
 
 export default Friend;
