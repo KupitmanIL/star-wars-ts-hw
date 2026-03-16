@@ -16,7 +16,7 @@ const Home = () => {
             return;
         }
         changeHero(heroId);
-    }, []);
+    }, [heroId]);
 
     return (heroId in characters) ? (
         <main>
