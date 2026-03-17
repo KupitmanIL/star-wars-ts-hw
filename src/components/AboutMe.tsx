@@ -1,12 +1,11 @@
-import {characters, defaultHero, period_month} from "../utils/constants.ts";
-import {useContext, useEffect, useState} from "react";
-import {useParams} from "react-router";
+import {characters,  period_month} from "../utils/constants.ts";
+import {useEffect, useState} from "react";
 import ErrorPage from "./ErrorPage.tsx";
-import {SWContext} from "../utils/context.ts";
+import {useValidHero} from "../hooks/customHook.ts";
+
 
 const AboutMe = () => {
-    const {changeHero} = useContext(SWContext)
-    const {heroId = defaultHero} = useParams();
+    const {isHeroValid, heroId} = useValidHero()
     const [hero, setHero] = useState(() => {
         const hero = JSON.parse(localStorage.getItem(heroId)!);
         if (hero && ((Date.now() - hero.timestamp) < period_month)) {
@@ -15,11 +14,7 @@ const AboutMe = () => {
     });
 
     useEffect(() => {
-        if (!(heroId in characters)) {
-            return;
-        }
-        changeHero(heroId);
-        if (!hero) {
+        if (isHeroValid && !hero) {
             fetch(`${characters[heroId as keyof typeof characters].url}`)
                 .then(response => response.json())
                 .then(data => {

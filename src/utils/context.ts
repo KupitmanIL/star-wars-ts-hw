@@ -3,5 +3,6 @@ import {defaultHero} from "./constants.ts";
 
 export const SWContext = createContext({
     hero: defaultHero,
-    changeHero: (hero: string) => console.log(hero)
+    changeHero: (hero: string) => console.log(hero),
+    isHeroValid : true
 });

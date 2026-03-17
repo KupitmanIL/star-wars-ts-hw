@@ -1,11 +1,10 @@
-import {useContext, useEffect, useState} from "react";
-import {base_url, characters, defaultHero, period_month} from "../utils/constants.ts";
-import {SWContext} from "../utils/context.ts";
-import {useParams} from "react-router";
+import {useState} from "react";
+import {period_month} from "../utils/constants.ts";
+import {useValidHero} from "../hooks/customHook.ts";
 import ErrorPage from "./ErrorPage.tsx";
 
 const Contact = () => {
-    const [planets, setPlanets] = useState<string[]>(() => {
+    const [planets] = useState<string[]>(() => {
         const planets = JSON.parse(localStorage.getItem('planets')!);
         if (planets && ((Date.now() - planets.time) < period_month)) {
             return planets.payload;
@@ -13,33 +12,10 @@ const Contact = () => {
             return ['wait...']
         }
     });
-    const {changeHero} = useContext(SWContext)
-    const {heroId = defaultHero} = useParams()
-    useEffect(() => {
-        if (!(heroId in characters)) {
-            return;
-        }
-        changeHero(heroId);
-    }, []);
 
-    useEffect(() => {
-        const getPlanets = async () => {
-            const res = await fetch(`${base_url}/v1/planets`);
-            const data: {name: string}[] = await res.json();
-            const planets = data.map(item => item.name);
-            setPlanets(planets);
-            localStorage.setItem('planets', JSON.stringify({
-                payload: planets,
-                time: Date.now()
-            }));
-        }
+    const{isHeroValid} = useValidHero();
 
-        if (planets.length === 1){
-            getPlanets().then(() => console.log('Planets were loaded'));
-        }
-    }, [])
-
-    return (heroId in characters) ? (
+    return isHeroValid ? (
         <form className={`w-4/5 my-0 mx-auto rounded-[5px] bg-[#f2f2f2] p-5`} onSubmit={(e) => {
             e.preventDefault();
         }}>

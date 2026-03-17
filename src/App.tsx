@@ -7,11 +7,12 @@ import {SWContext} from "./utils/context.ts";
 
 function App() {
     const [hero, setHero] = useState(defaultHero);
+    const [isHeroValid] = useState(true)
 
     return (
         <div className={'mx-2'}>
             <SWContext value={{hero, changeHero: setHero}}>
-                <Header/>
+                <Header value={{isHeroValid, changeHero: setHero}}/>
                 <Main/>
                 <Footer/>
             </SWContext>

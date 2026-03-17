@@ -1,4 +1,4 @@
-import {characters} from "../utils/constants.ts";
+import {characters, navItems} from "../utils/constants.ts";
 import {NavLink} from "react-router";
 import {useContext} from "react";
 import {SWContext} from "../utils/context.ts";
@@ -18,7 +18,7 @@ const Friend = ({friend, pos}: Props) => {
 
     return (
         <NavLink
-            to={`/home/${friend}`} onClick={() => changeHero(friend)}>
+            to={`/${navItems[0]}/${friend}`} onClick={() => changeHero(friend)}>
             <img className={styles} src={characters[friend].img} alt={characters[friend].name}/>
         </NavLink>
     )
